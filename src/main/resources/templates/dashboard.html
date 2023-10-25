@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns:th="http//thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link th:href="@{/css/dash.css}" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/themes/dark_turquoise.min.js"></script>
+    <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="app">
+    <div class="sidebar">
+        <div class="user-info">
+            <div class="info-img img-fit-cover">
+                <img src="../../assets/images/blulogix.gif" alt="Blu-img">
+            </div>
+            <h2 class="info-name"><span>BLU</span>LOGIX</h2>
+        </div>
+        <nav class="navigation">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a th:href="@{dashboard}" class="nav-link parent-link active">
+                        <img src="../../assets/icons/dashboard.svg" alt="Dashboard" class="nav-link-icon">
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link parent-link null">
+                        <img src="../../assets/icons/report.svg" alt="Organization" class="nav-link-icon">
+                        <span class="nav-link-text">Organization</span>
+                        <button class="nav-link-plus-button" data-toggle="plus-minus">
+                            <img src="../../assets/icons/plus-add.svg" alt="Plus" class="nav-link-plus-icon"
+                                 id="plus-icon">
+                            <img src="../../assets/icons/minus.svg" alt="Minus"
+                                 class="nav-link-minus-icon nav-link-plus-icon-hidden" id="minus-icon">
+                        </button>
+                    </a>
+
+                    <ul class="nav-link-expand nav-link-expand-hidden">
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{locations}" class="nav-link null">
+                                <img src="../../assets/icons/location.svg" alt="Location" class="nav-link-icon">
+                                <span class="nav-link-text">Location</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{departments}" class="nav-link null">
+                                <img src="../../assets/icons/department.svg" alt="Department" class="nav-link-icon">
+                                <span class="nav-link-text">Department</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{roles}" class="nav-link null">
+                                <img src="../../assets/icons/role.svg" alt="Role" class="nav-link-icon">
+                                <span class="nav-link-text">Role</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{policies}" class="nav-link null">
+                                <img src="../../assets/icons/policy.svg" alt="Policies" class="nav-link-icon">
+                                <span class="nav-link-text">Policies</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link parent-link null">
+                        <img src="../../assets/icons/user.svg" alt="Employees" class="nav-link-icon">
+                        <span class="nav-link-text">Employees</span>
+                        <button class="nav-link-plus-button" data-toggle="plus-minus">
+                            <img src="../../assets/icons/plus-add.svg" alt="Plus" class="nav-link-plus-icon"
+                                 id="plus-icon">
+                            <img src="../../assets/icons/minus.svg" alt="Minus"
+                                 class="nav-link-minus-icon nav-link-plus-icon-hidden" id="minus-icon">
+                        </button>
+                    </a>
+
+                    <ul class="nav-link-expand nav-link-expand-hidden">
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{employees}" class="nav-link null">
+                                <img src="../../assets/icons/user.svg" alt="Employees" class="nav-link-icon">
+                                <span class="nav-link-text">Employees</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{transfers}" class="nav-link null">
+                                <img src="../../assets/icons/transfer.svg" alt="Transfer" class="nav-link-icon">
+                                <span class="nav-link-text">Transfer</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link parent-link">
+                        <img src="../../assets/icons/budget.svg" alt="Timesheet" class="nav-link-icon">
+                        <span class="nav-link-text">Timesheet</span>
+                        <button class="nav-link-plus-button" data-toggle="plus-minus">
+                            <img src="../../assets/icons/plus-add.svg" alt="Plus" class="nav-link-plus-icon"
+                                 id="plus-icon">
+                            <img src="../../assets/icons/minus.svg" alt="Minus"
+                                 class="nav-link-minus-icon nav-link-plus-icon-hidden" id="minus-icon">
+                        </button>
+                    </a>
+
+                    <ul class="nav-link-expand nav-link-expand-hidden">
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{attendances}" class="nav-link">
+                                <img src="../../assets/icons/attendance.svg" alt="Attendance" class="nav-link-icon">
+                                <span class="nav-link-text">Attendance</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link parent-link null">
+                        <img src="../..//assets/icons/card.svg" alt="Payroll" class="nav-link-icon">
+                        <span class="nav-link-text">Payroll</span>
+                        <button class="nav-link-plus-button" data-toggle="plus-minus">
+                            <img src="../../assets/icons/plus-add.svg" alt="Plus" class="nav-link-plus-icon"
+                                 id="plus-icon">
+                            <img src="../../assets/icons/minus.svg" alt="Minus"
+                                 class="nav-link-minus-icon nav-link-plus-icon-hidden" id="minus-icon">
+                        </button>
+                    </a>
+
+                    <ul class="nav-link-expand nav-link-expand-hidden">
+                        <li class="nav-link-expand-item">
+                            <a th:href="@{payrolls}" class="nav-link null">
+                                <img src="../../assets/icons/template.svg" alt="Payroll Template"
+                                     class="nav-link-icon">
+                                <span class="nav-link-text">Payroll Template</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-top">
+            <div class="content-top-left">
+                <button type="button" class="sidebar-toggler">
+                    <img src="../assets/icons/menu.svg" alt="Button">
+                </button>
+                <h3 class="content-top-title">Dashboard</h3>
+            </div>
+
+            <div class="content-top-btns">
+                <button type="button" class="settings-btn content-top-btn">
+                    <img src="../assets/icons/settings.svg" alt="Search">
+                </button>
+
+                <button type="button" class="notification-btn content-top-btn">
+                    <img src="../assets/icons/bell.svg" alt="Bell">
+                    <span class="notification-btn-dot"></span>
+                </button>
+
+                <button type="button" class="logout-btn content-top-btn">
+                    <img src="../assets/icons/logout.svg" alt="logout">
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content-holder">
+            <div class="content-grid-one">
+                <div class="grid-one-item grid-common grid-c1">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Total Jobs</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+                    <div class="grid-c1-content">
+                        <h1 th:text="${totalJobs}"></h1>
+                    </div>
+                </div>
+
+                <div class="grid-one-item grid-common grid-c2">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Total Employees</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+                    <div class="grid-c1-content">
+                        <h1 th:text="${totalEmployees}"></h1>
+                    </div>
+                </div>
+
+                <div class="grid-one-item grid-common grid-c3">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Total Salary</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+                    <div class="grid-c1-content">
+                        <h1 th:text="${totalSalary}"> </h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid-two">
+                <div class="grid-two-item grid-common grid-c4">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Employee Distribution</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+
+                    <div class="grid-c-top text-silver-v1">
+                        <h2 class="lg-value">Place</h2>
+                        <span class="lg-value">Number</span>
+                    </div>
+
+                    <div class="grid-c4-content">
+                        <div class="grid-items" th:each="location :${locations}">
+                            <div class="grid-item bg-jet">
+                                <div class="grid-item-l">
+                                    <p class="text text-silver-v1" th:text="${location.country}"></p>
+                                </div>
+
+                                <div class="grid-item-r">
+                                    <span class="text-silver-v1" th:text="${location.numOfEmployees}"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-two-item grid-common grid-c4">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Employee Distribution</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+
+                    <div class="grid-c4-content">
+                        <canvas id="canvas" style="width: 100%;"></canvas>
+                    </div>
+                </div>
+
+
+                <div class="grid-two-item grid-common grid-c4">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Employees</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+
+                    <div class="grid-c-top text-silver-v1">
+                        <h2 class="lg-value">Name</h2>
+                        <span class="lg-value">Position</span>
+                    </div>
+
+                    <div class="grid-c4-content">
+                        <div class="grid-items" th:each="employee :${employees}">
+                            <div class="grid-item bg-jet">
+                                <div class="grid-item-l">
+                                    <p class="text text-silver-v1" th:text="${employee.employeeName}"></p>
+                                </div>
+
+                                <div class="grid-item-r">
+                                    <span class="text-silver-v1" th:text="${employee.employeeJob}"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid-three">
+                <div class="grid-three-item grid-common grid-c7">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Locations</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+
+                    <div class="grid-c5-content bg-jet">
+                        <div class="grid-c4-content">
+                            <img src="../assets/icons/world.svg" alt="World map">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-three-item grid-common grid-c8">
+                    <div class="grid-c-title">
+                        <h3 class="grid-c-title-text">Employees by Location</h3>
+                        <button class="grid-c-title-icon">
+                            <img src="../assets/icons/plus.svg">
+                        </button>
+                    </div>
+
+                    <div class="grid-c5-content bg-jet">
+                        <div class="grid-c6-content">
+                            <div id="container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../javascript/chart.js"></script>
+<script src="../javascript/script.js"></script>
+</body>
+</html>
